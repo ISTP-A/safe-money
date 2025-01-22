@@ -90,4 +90,13 @@ body {
   .responsive-grid-item {
     @apply max-md:col-span-1;
   }
+  .card-inline {
+    @apply p-4 border rounded-md bg-white flex flex-wrap items-center;
+  }
+  .card-inline-title {
+    @apply flex-1 text-sm text-nowrap text-zinc-500 leading-none tracking-tight;
+  }
+  .card-inline-content {
+    @apply text-base font-semibold flex-1 text-right text-nowrap;
+  }
 }

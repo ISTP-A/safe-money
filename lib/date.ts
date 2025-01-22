@@ -24,3 +24,13 @@ export function countAllDatesInMonth(year: number, month: number) {
 
   return eachDayOfInterval({ start, end }).length
 }
+
+export function getKoreanDay(dayNumber: number) {
+  const daysInKorean = ['일', '월', '화', '수', '목', '금', '토']
+
+  if (dayNumber < 0 || dayNumber > 6) {
+    throw new Error('요일 숫자는 0에서 6 사이여야 합니다.')
+  }
+
+  return daysInKorean[dayNumber]
+}

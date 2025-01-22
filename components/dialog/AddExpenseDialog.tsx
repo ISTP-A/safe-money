@@ -1,22 +1,31 @@
 'use client'
 
 import useCurrency from "@/hooks/use-currency"
-import useWeekdaySelect, { ReturnType } from "@/hooks/use-weekday-select"
+import useWeekdaySelect, { BudgetReturnType } from "@/hooks/use-weekday-select"
 import { Button } from "../ui/button"
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "../ui/dialog"
 import { Input } from "../ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select"
+import { useRef } from "react"
 
 interface Props {
-  onSubmit: (data: ReturnType) => void
+  onSubmit: (data: BudgetReturnType) => void
 }
 
-const AddExpenditrueDialog = (props: Props) => {
+const AddExpenseDialog = (props: Props) => {
+  const memoRef = useRef<HTMLInputElement>(null)
   const { currency, handleChangeValue } = useCurrency()
   const { selected, onChangeSelected, getValue, renderSelector } = useWeekdaySelect()
 
   const handleSubmit = () => {
-    const submitValue: ReturnType = { id: 'PAY', type: selected, currency: currency, value: getValue() } as ReturnType
+    const submitValue: BudgetReturnType = {
+      id: 'PAY',
+      type: selected,
+      currency: currency,
+      value: getValue(),
+      memo: memoRef?.current?.value
+    } as BudgetReturnType
+
     props.onSubmit(submitValue)
   }
 
@@ -27,11 +36,11 @@ const AddExpenditrueDialog = (props: Props) => {
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>정기지출 추가하기</DialogTitle>
-          <DialogDescription>지출을 입력해서 지출을 관리해보세요</DialogDescription>
+          <DialogTitle>추가하기</DialogTitle>
+          <DialogDescription>고정으로 나가는 돈을 관리해보세요</DialogDescription>
         </DialogHeader>
-        <div className="grid grid-cols-4 gap-2">
-          <div className="col-span-1">
+        <div className="grid md:grid-cols-8 gap-2">
+          <div className="md:col-span-2">
             <Select value={selected} onValueChange={onChangeSelected}>
               <SelectTrigger className="w-full">
                 <SelectValue placeholder='선택' />
@@ -43,22 +52,29 @@ const AddExpenditrueDialog = (props: Props) => {
               </SelectContent>
             </Select>
           </div>
-          <div className="col-span-3">{renderSelector()}</div>
-          <div className="col-span-4">
+          <div className="md:col-span-6">{renderSelector()}</div>
+
+          <div className="md:col-span-8">
             <Input
               type="text"
               className="text-right"
-              placeholder="지출금액을 입력해주세요"
+              placeholder="금액을 입력해주세요"
               value={currency.toLocaleString('ko-KR')}
               onChange={(event) => handleChangeValue(event.target.value)}
             />
           </div>
-          {/* <div className="col-span-4">
-            <Input type="text" placeholder="비고" />
-          </div> */}
+          <div className="md:col-span-8">
+            <Input
+              ref={memoRef}
+              type="text"
+              placeholder="메모를 입력해주세요"
+            />
+          </div>
         </div>
         <DialogFooter className="max-md:gap-2">
-          <Button onClick={handleSubmit}>저장</Button>
+          <DialogClose asChild>
+            <Button onClick={handleSubmit}>저장</Button>
+          </DialogClose>
           <DialogClose asChild>
             <Button variant='outline'>닫기</Button>
           </DialogClose>
@@ -69,4 +85,4 @@ const AddExpenditrueDialog = (props: Props) => {
 }
 
 
-export default AddExpenditrueDialog
+export default AddExpenseDialog

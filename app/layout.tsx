@@ -1,9 +1,10 @@
 import { AppSidebar } from "@/components/app-sidebar"
 import Header from "@/components/header"
-import { SidebarProvider } from "@/components/ui/sidebar"
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
 import type { Metadata } from "next"
 import "./globals.css"
 import { pretendard } from "./fonts/fonts"
+import { ExchangeRateProvider } from "@/context/ExchangeRateContext"
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -21,13 +22,15 @@ export default function RootLayout({
       className={pretendard.variable}
     >
       <body className='font-pretendard antialiased bg-zinc-50'>
-        <SidebarProvider>
-          <AppSidebar />
-          <main className="w-full">
-            <Header />
-            {children}
-          </main>
-        </SidebarProvider>
+        <ExchangeRateProvider>
+          <SidebarProvider>
+            <AppSidebar />
+            <SidebarInset className="bg-zinc-100">
+              <Header />
+              {children}
+            </SidebarInset>
+          </SidebarProvider>
+        </ExchangeRateProvider>
       </body>
     </html>
   );

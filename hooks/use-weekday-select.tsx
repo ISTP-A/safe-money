@@ -4,15 +4,15 @@ import { JSX, useState } from "react"
 
 export type SelectDateType = 'every-day' | 'every-week' | 'every-month'
 
-export type ReturnType =
-  | { id: string, type: 'every-day', currency: number, value: null, }
-  | { id: string, type: 'every-week', currency: number, value: string[] }
-  | { id: string, type: 'every-month', currency: number, value: Date | undefined }
+export type BudgetReturnType =
+  | { id: string, type: 'every-day', currency: number, value: null, memo?: string }
+  | { id: string, type: 'every-week', currency: number, value: string[], memo?: string }
+  | { id: string, type: 'every-month', currency: number, value: number, memo?: string }
 
 const useWeekdaySelect = () => {
   const [selected, setSelected] = useState<SelectDateType>('every-week')
   const [weekdays, setWeekdays] = useState<string[]>([])
-  const [date, setDate] = useState<Date | undefined>()
+  const [date, setDate] = useState<Date>()
 
   const onChangeSelected = (value: SelectDateType) => {
     setSelected(value)
@@ -29,7 +29,7 @@ const useWeekdaySelect = () => {
       case 'every-week':
         return weekdays
       case 'every-month':
-        return date
+        return date?.getDate()
     }
   }
 

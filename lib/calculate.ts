@@ -1,4 +1,4 @@
-import { ReturnType, SelectDateType } from '@/hooks/use-weekday-select'
+import { BudgetReturnType, SelectDateType } from '@/hooks/use-weekday-select'
 import { countAllDatesInMonth, countDaysOfWeek } from './date'
 
 export const countBySelectDateType = (
@@ -18,7 +18,7 @@ export const countBySelectDateType = (
 }
 
 export const calculateExpenditrue = (
-  data: ReturnType,
+  data: BudgetReturnType,
   date: Date = new Date()
 ) => {
   const dateCount = countBySelectDateType(

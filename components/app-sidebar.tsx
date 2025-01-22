@@ -9,43 +9,42 @@ import {
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
-  SidebarMenuItem,
-  SidebarTrigger,
+  SidebarMenuItem
 } from "@/components/ui/sidebar"
+import Image from "next/image"
 
 // Menu items.
 const items = [
   {
-    title: "Home",
-    url: "#",
+    title: "홈",
+    url: "/",
     icon: Home,
   },
   {
-    title: "Inbox",
-    url: "#",
+    title: "예산관리",
+    url: "/budget",
     icon: Inbox,
   },
   {
-    title: "Calendar",
-    url: "#",
+    title: "캘린더",
+    url: "/calendar",
     icon: Calendar,
   },
   {
-    title: "Search",
-    url: "#",
-    icon: Search,
-  },
-  {
-    title: "Settings",
-    url: "#",
+    title: "설정",
+    url: "/setting",
     icon: Settings,
   },
 ]
 
 export function AppSidebar() {
   return (
-    <Sidebar>
-      <SidebarHeader className="bg-white">
+    <Sidebar collapsible="icon">
+      <SidebarHeader className="bg-white py-4">
+        <SidebarMenuButton size='lg' className="hover:bg-transparent">
+          <Image src='/logo.webp' width={48} height={48} alt='finden' className="rounded-md" />
+          <span className="text-lg font-extrabold text-sidebar-foreground">FinDen</span>
+        </SidebarMenuButton>
       </SidebarHeader>
       <SidebarContent className="bg-white">
         <SidebarGroup>
